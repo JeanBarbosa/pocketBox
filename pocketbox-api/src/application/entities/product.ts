@@ -1,4 +1,4 @@
-import { Replace } from '@/utils/helpers/Replace';
+import { Replace } from '@/shared/utils/helpers/Replace';
 
 export interface ProductProps {
   id: string;
