@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 
-import { DatabaseModule } from '@infra/database/database.module';
 import { HttpModule } from '@infra/http/http.module';
+import { AuthModule } from './http/auth/auth.module';
 
 @Module({
-  imports: [HttpModule],
+  imports: [HttpModule, AuthModule],
   exports: [],
 })
 export class InfraModule {}

@@ -10,9 +10,9 @@ export class MongoDBProductRepository implements ProductRepository {
     @Inject('PRODUCT_MODEL') private readonly productModel: Model<Product>,
   ) {}
 
-  async create(createCatDto: Product): Promise<Product> {
+  async create(createProductDto: Product): Promise<Product> {
     const createdProduct = await this.productModel.create(
-      MongoDBProductMapper.toMongoDB(createCatDto),
+      MongoDBProductMapper.toMongoDB(createProductDto),
     );
     return MongoDBProductMapper.toDomain(createdProduct);
   }

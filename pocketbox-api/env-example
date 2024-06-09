@@ -1,0 +1,6 @@
+NODE_ENV=development
+APP_NAME='pocketbox-api'
+APP_PORT=3000
+
+#database
+URI=""
