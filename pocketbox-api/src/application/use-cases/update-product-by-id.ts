@@ -3,10 +3,10 @@ import { ProductRepository } from '../repositories/product-repository';
 import { Product } from '../entities/product';
 
 interface ProductFieldsForUpdateRequest {
-  name: string;
-  price: number;
-  category: string;
-  description: string;
+  name?: string;
+  price?: number;
+  category?: string;
+  description?: string;
 }
 
 interface UpdateProductRequest {
@@ -21,8 +21,15 @@ export class UpdateProductById {
   async execute(data: UpdateProductRequest) {
     const { product, id } = data;
 
+    const productExists = await this.productRepository.findOne(id);
+
+    if (!productExists) {
+      throw new Error('Product not found');
+    }
+
     const productForUpdate = new Product({
       id,
+      ...productExists.toJSON(),
       ...product,
     });
 
