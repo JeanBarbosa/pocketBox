@@ -2,5 +2,9 @@ NODE_ENV=development
 APP_NAME='pocketbox-api'
 APP_PORT=3000
 
+#auth
+AUTH_JWT_SECRET='secret'
+AUTH_JWT_TOKEN_EXPIRES_IN='1d'
+
 #database
 URI=""

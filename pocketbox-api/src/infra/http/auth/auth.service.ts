@@ -20,7 +20,10 @@ export class AuthService {
   async validateLogin(
     loginDto: AuthEmailLoginDto,
     onlyAdmin: boolean,
-  ): Promise<{ token: string; user: User }> {
+  ): Promise<{
+    token: string;
+    user: Pick<User, 'id' | 'firstName' | 'email'>;
+  }> {
     const user = await this.findUserByEmail.execute({
       email: loginDto.email,
     });
@@ -35,7 +38,14 @@ export class AuthService {
         id: user.id,
       });
 
-      return { token, user: user };
+      return {
+        token,
+        user: {
+          id: user.id,
+          firstName: user.firstName,
+          email: user.email,
+        },
+      };
     } else {
       throw new HttpException(
         {
@@ -50,10 +60,8 @@ export class AuthService {
   }
 
   async register(dto: AuthRegisterLoginDto): Promise<void> {
-    const hash = crypto
-      .createHash('sha256')
-      .update(randomStringGenerator())
-      .digest('hex');
+    const salt = await bcrypt.genSalt();
+    const hash = await bcrypt.hash(dto.password, salt);
 
     const user = await this.createNewUser.execute({
       ...dto,
