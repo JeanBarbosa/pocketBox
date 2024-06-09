@@ -8,7 +8,7 @@ describe('Products create', () => {
 
     const productData = {
       name: 'Product 1',
-      price: '10.00',
+      price: 10,
       category: 'Product 1 category',
       description: 'Product 1 description',
     };

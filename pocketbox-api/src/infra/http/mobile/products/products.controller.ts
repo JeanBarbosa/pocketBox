@@ -1,3 +1,7 @@
+import { Product } from '@/application/entities/product';
+import { CreateProductDto } from './dto/create-product.dto';
+import { CreateProduct } from '@/application/use-cases/create-product';
+import { GetAllProducts } from '@/application/use-cases/get-all-products';
 import {
   Controller,
   Get,
@@ -7,22 +11,33 @@ import {
   Delete,
   Put,
 } from '@nestjs/common';
-import { CreateProductDto } from './dto/create-product.dto';
-import { ProductsService } from './products.service';
-import { Product } from './interfaces/product.interface';
+import { GetProductById } from '@/application/use-cases/get-product-by-id';
+import { DeleteProductById } from '@/application/use-cases/delete-product-by-id';
+import { UpdateProductById } from '@/application/use-cases/update-product-by-id';
 
 @Controller('products')
 export class ProductsController {
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(
+    private readonly createProduct: CreateProduct,
+    private readonly getAllProducts: GetAllProducts,
+    private readonly getProductById: GetProductById,
+    private readonly deleteProductById: DeleteProductById,
+    private readonly updateProductById: UpdateProductById,
+  ) {}
 
   @Post()
   async create(@Body() createProductDto: CreateProductDto) {
-    return this.productsService.create(createProductDto);
+    return this.createProduct.execute(createProductDto);
   }
 
   @Get()
-  async findAll(): Promise<Product[]> {
-    return this.productsService.findAll();
+  async findAll() {
+    return await this.getAllProducts.execute();
+  }
+
+  @Get(':id')
+  async findOne(@Param('id') id: string): Promise<Product> {
+    return await this.getProductById.execute(id);
   }
 
   @Put(':id')
@@ -30,11 +45,14 @@ export class ProductsController {
     @Param('id') id: string,
     @Body() product: Product,
   ): Promise<Product> {
-    return await this.productsService.update(id, product);
+    return await this.updateProductById.execute({
+      id,
+      product,
+    });
   }
 
   @Delete(':id')
   async delete(@Param('id') id: string): Promise<Product> {
-    return await this.productsService.delete(id);
+    return await this.deleteProductById.execute(id);
   }
 }

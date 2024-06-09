@@ -3,7 +3,7 @@ import { Replace } from '@/shared/utils/helpers/Replace';
 export interface ProductProps {
   id: string;
   name: string;
-  price: string;
+  price: number;
   description: string;
   category: string;
   createdAt: Date;
@@ -47,6 +47,30 @@ export class Product {
     return this.props.name;
   }
 
+  public set price(price: number) {
+    this.props.price = price;
+  }
+
+  public get price(): number {
+    return this.props.price;
+  }
+
+  public set category(category: string) {
+    this.props.category = category;
+  }
+
+  public get category(): string {
+    return this.props.category;
+  }
+
+  public set description(description: string) {
+    this.props.description = description;
+  }
+
+  public get description(): string {
+    return this.props.description;
+  }
+
   public set updatedAt(updatedAt: Date) {
     this.props.updatedAt = updatedAt;
   }
@@ -61,5 +85,17 @@ export class Product {
 
   public get createdAt(): Date {
     return this.props.createdAt;
+  }
+
+  public toJSON(): ProductProps {
+    return {
+      id: this.id,
+      name: this.name,
+      price: this.price,
+      description: this.description,
+      category: this.category,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+    };
   }
 }

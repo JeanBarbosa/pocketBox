@@ -4,7 +4,7 @@ import { Product } from '../entities/product';
 
 interface CreateProductRequest {
   name: string;
-  price: string;
+  price: number;
   category: string;
   description: string;
 }

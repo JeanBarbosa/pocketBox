@@ -6,7 +6,7 @@ describe('Product Entity', () => {
     const product = new Product({
       id: randomUUID(),
       name: 'Product 1',
-      price: '10.00',
+      price: 10,
       category: 'Product 1 category',
       description: 'Product 1 description',
     });

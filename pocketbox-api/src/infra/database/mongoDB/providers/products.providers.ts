@@ -1,5 +1,5 @@
 import { Mongoose } from 'mongoose';
-import { ProductSchema } from './schemas/product.schema';
+import { ProductSchema } from '../schemas/product.schema';
 
 export const productsProviders = [
   {
