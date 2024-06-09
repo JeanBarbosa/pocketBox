@@ -11,6 +11,7 @@ interface ProductFieldsForUpdateRequest {
 
 interface UpdateProductRequest {
   id: string;
+  userId: string;
   product: ProductFieldsForUpdateRequest;
 }
 
@@ -19,12 +20,16 @@ export class UpdateProductById {
   constructor(private productRepository: ProductRepository) {}
 
   async execute(data: UpdateProductRequest) {
-    const { product, id } = data;
+    const { product, id, userId } = data;
 
     const productExists = await this.productRepository.findOne(id);
 
     if (!productExists) {
       throw new Error('Product not found');
+    }
+
+    if (productExists.userId !== userId) {
+      throw new Error('Unauthorized');
     }
 
     const productForUpdate = new Product({

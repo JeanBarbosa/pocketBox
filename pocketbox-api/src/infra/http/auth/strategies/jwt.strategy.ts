@@ -2,10 +2,13 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PassportStrategy } from '@nestjs/passport';
-// import { User } from '@/application/entities/user';
+import { User } from '@/application/entities/user';
 import { ConfigService } from '@nestjs/config';
 
-//type JwtPayload = Pick<User, 'id' | 'role'> & { iat: number; exp: number };
+type JwtPayload = Pick<User, 'id' | 'email' | 'firstName'> & {
+  iat: number;
+  exp: number;
+};
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -19,7 +22,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  public validate(payload: any) {
+  public validate(payload: JwtPayload) {
     if (!payload.id) {
       throw new UnauthorizedException();
     }

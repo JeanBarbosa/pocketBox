@@ -5,6 +5,7 @@ describe('Product Entity', () => {
   it('should be able to create a product', () => {
     const product = new Product({
       id: randomUUID(),
+      userId: randomUUID(),
       name: 'Product 1',
       price: 10,
       category: 'Product 1 category',

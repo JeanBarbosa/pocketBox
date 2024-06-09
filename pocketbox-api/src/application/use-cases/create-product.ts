@@ -3,6 +3,7 @@ import { ProductRepository } from '../repositories/product-repository';
 import { Product } from '../entities/product';
 
 interface CreateProductRequest {
+  userId: string;
   name: string;
   price: number;
   category: string;

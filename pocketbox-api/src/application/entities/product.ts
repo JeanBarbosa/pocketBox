@@ -2,6 +2,7 @@ import { Replace } from '@/shared/utils/helpers/Replace';
 
 export interface ProductProps {
   id: string;
+  userId: string;
   name: string;
   price: number;
   description: string;
@@ -37,6 +38,14 @@ export class Product {
 
   public get id(): string {
     return this.props.id;
+  }
+
+  public set userId(userId: string) {
+    this.props.userId = userId;
+  }
+
+  public get userId(): string {
+    return this.props.userId;
   }
 
   public set name(name: string) {
@@ -90,6 +99,7 @@ export class Product {
   public toJSON(): ProductProps {
     return {
       id: this.id,
+      userId: this.userId,
       name: this.name,
       price: this.price,
       description: this.description,

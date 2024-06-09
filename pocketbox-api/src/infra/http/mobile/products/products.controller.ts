@@ -1,11 +1,13 @@
+import { AuthGuard } from '../../auth/auth.guard';
 import { Product } from '@/application/entities/product';
 import { CreateProductDto } from './dto/create-product.dto';
+import { Auth, CurrentUser } from '../../auth/current-user';
+import { UpdateProductDto } from './dto/update-product.dto';
 import { CreateProduct } from '@/application/use-cases/create-product';
 import { GetAllProducts } from '@/application/use-cases/get-all-products';
 import { GetProductById } from '@/application/use-cases/get-product-by-id';
 import { DeleteProductById } from '@/application/use-cases/delete-product-by-id';
 import { UpdateProductById } from '@/application/use-cases/update-product-by-id';
-import { AuthGuard } from '../../auth/auth.guard';
 import {
   Controller,
   Get,
@@ -15,9 +17,9 @@ import {
   Delete,
   Put,
   UseGuards,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
-import { CurrentUser } from '../../auth/current-user';
-import { User } from '@/application/entities/user';
 
 @UseGuards(AuthGuard)
 @Controller('products')
@@ -31,36 +33,45 @@ export class ProductsController {
   ) {}
 
   @Post()
-  async create(@Body() createProductDto: CreateProductDto) {
-    return this.createProduct.execute(createProductDto);
+  @HttpCode(HttpStatus.CREATED)
+  async create(@Body() product: CreateProductDto, @CurrentUser() user: Auth) {
+    return this.createProduct.execute({
+      ...product,
+      userId: user.id,
+    });
   }
 
   @Get()
-  async findAll() {
-    return await this.getAllProducts.execute();
+  async findAll(@CurrentUser() user: Auth) {
+    return await this.getAllProducts.execute({ userId: user.id });
   }
 
   @Get(':id')
   async findOne(
     @Param('id') id: string,
-    @CurrentUser() user: Pick<User, 'id' | 'email' | 'firstName'>,
+    @CurrentUser() user: Auth,
   ): Promise<Product> {
-    return await this.getProductById.execute(id);
+    return await this.getProductById.execute({ id, userId: user.id });
   }
 
   @Put(':id')
   async update(
     @Param('id') id: string,
-    @Body() product: Product,
-  ): Promise<Product> {
+    @Body() product: UpdateProductDto,
+    @CurrentUser() user: Auth,
+  ) {
     return await this.updateProductById.execute({
       id,
+      userId: user.id,
       product,
     });
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string): Promise<Product> {
-    return await this.deleteProductById.execute(id);
+  async delete(
+    @Param('id') id: string,
+    @CurrentUser() user: Auth,
+  ): Promise<void> {
+    return await this.deleteProductById.execute({ userId: user.id, id });
   }
 }

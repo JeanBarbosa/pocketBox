@@ -5,6 +5,7 @@ export class MongoDBProductMapper {
   static toMongoDB(product: Product) {
     return {
       name: product.name,
+      userId: product.userId,
       price: product.price,
       category: product.category,
       description: product.description,
@@ -16,6 +17,7 @@ export class MongoDBProductMapper {
   static toDomain(data: Document & Product): Product {
     return new Product({
       id: data._id.toString(),
+      userId: data.userId,
       name: data.name,
       price: data.price,
       category: data.category,
