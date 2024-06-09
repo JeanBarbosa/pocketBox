@@ -6,11 +6,14 @@ import { GetAllProducts } from '@/application/use-cases/get-all-products';
 import { GetProductById } from '@/application/use-cases/get-product-by-id';
 import { DeleteProductById } from '@/application/use-cases/delete-product-by-id';
 import { UpdateProductById } from '@/application/use-cases/update-product-by-id';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [DatabaseModule],
   controllers: [ProductsController],
   providers: [
+    JwtService,
+
     //products
     CreateProduct,
     GetAllProducts,

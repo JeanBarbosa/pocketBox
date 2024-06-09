@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 @Module({
   imports: [ProductsModule, UsersModule],
   controllers: [],
+  providers: [],
   exports: [],
 })
 export class MobileModule {}

@@ -10,11 +10,14 @@ import {
   Param,
   Delete,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { GetProductById } from '@/application/use-cases/get-product-by-id';
 import { DeleteProductById } from '@/application/use-cases/delete-product-by-id';
 import { UpdateProductById } from '@/application/use-cases/update-product-by-id';
+import { AuthGuard } from '../../auth/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('products')
 export class ProductsController {
   constructor(
