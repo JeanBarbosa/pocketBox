@@ -1,7 +1,10 @@
+import { z } from "zod"
 import { Fontisto } from "@expo/vector-icons"
-import { SafeAreaView } from "react-native-safe-area-context"
+import { useForm, Controller } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 import * as Animatable from "react-native-animatable"
 import { useNavigation } from "@react-navigation/native"
+import { SafeAreaView } from "react-native-safe-area-context"
 import { AuthNavigatorRoutesProps } from "../routes/auth.routes"
 import {
   View,
@@ -11,9 +14,40 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native"
+import { Input } from "../components/Input"
+
+type FormDataProps = {
+  email: string
+  password: string
+}
+
+const signInSchema = z.object({
+  email: z
+    .string({ required_error: "e-mail obrigatório" })
+    .email("e-mail inválido"),
+  password: z
+    .string({ required_error: "senha obrigatória" })
+    .min(6, "mínimo 6 caracteres"),
+})
 
 export function SignIn() {
   const navigation = useNavigation<AuthNavigatorRoutesProps>()
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormDataProps>({
+    resolver: zodResolver(signInSchema),
+  })
+
+  async function handleSignIn({ email, password }: FormDataProps) {
+    try {
+      console.log(email, password)
+    } catch (error) {
+      const title = "Não foi possível entrar. Tente novamente mais tarde."
+      alert(title)
+    }
+  }
 
   return (
     <ScrollView
@@ -36,25 +70,39 @@ export function SignIn() {
             </Text>
           </View>
           <View className="mx-4 flex justify-between items-center gap-3">
-            <Animatable.View
-              animation="slideInUp"
-              className="flex-row flex-1 p-4 bg-white rounded-2xl"
-            >
-              <Fontisto name="email" size={28} color="gray" />
-              <TextInput
-                placeholder="email"
-                className="flex-1 ml-2 text-gray-800"
+            <Animatable.View animation="slideInUp">
+              <Controller
+                control={control}
+                name="email"
+                render={({ field: { onChange } }) => (
+                  <Input hasError={!!errors.email}>
+                    <Fontisto name="email" size={28} color="gray" />
+                    <Input.Field
+                      placeholder="e-mail"
+                      keyboardType="email-address"
+                      autoCapitalize="none"
+                      onChangeText={onChange}
+                    />
+                  </Input>
+                )}
               />
             </Animatable.View>
-            <Animatable.View
-              animation="slideInUp"
-              className="flex-row flex-1 p-4 bg-white rounded-2xl"
-            >
-              <Fontisto name="unlocked" size={28} color="gray" />
-              <TextInput
-                secureTextEntry
-                placeholder="Senha"
-                className="flex-1 ml-2 text-gray-800"
+            <Animatable.View animation="slideInUp">
+              <Controller
+                control={control}
+                name="password"
+                render={({ field: { onChange } }) => (
+                  <Input hasError={!!errors.password}>
+                    <Fontisto name="unlocked" size={28} color="gray" />
+                    <Input.Field
+                      onSubmitEditing={handleSubmit(handleSignIn)}
+                      secureTextEntry
+                      returnKeyType="send"
+                      placeholder="Senha"
+                      onChangeText={onChange}
+                    />
+                  </Input>
+                )}
               />
             </Animatable.View>
             <View className="flex-row flex-1 mt-4">
@@ -63,7 +111,10 @@ export function SignIn() {
                 delay={100}
                 className="flex-1"
               >
-                <TouchableOpacity className="flex-row justify-center items-center gap-2 bg-gray-800 p-4 px-14 rounded-2xl">
+                <TouchableOpacity
+                  onPress={handleSubmit(handleSignIn)}
+                  className="flex-row justify-center items-center gap-2 bg-gray-800 p-4 px-14 rounded-2xl"
+                >
                   <Text className="text-white text-xl font-semibold">
                     Entrar
                   </Text>
