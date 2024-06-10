@@ -1,4 +1,4 @@
-import { Fontisto } from "@expo/vector-icons"
+import { Fontisto, Feather } from "@expo/vector-icons"
 import { SafeAreaView } from "react-native-safe-area-context"
 import * as Animatable from "react-native-animatable"
 import { useNavigation } from "@react-navigation/native"
@@ -12,7 +12,7 @@ import {
   TouchableOpacity,
 } from "react-native"
 
-export function SignIn() {
+export function SignUp() {
   const navigation = useNavigation<AuthNavigatorRoutesProps>()
 
   return (
@@ -36,6 +36,16 @@ export function SignIn() {
             </Text>
           </View>
           <View className="mx-4 flex justify-between items-center gap-3">
+            <Animatable.View
+              animation="slideInUp"
+              className="flex-row flex-1 p-4 bg-white rounded-2xl"
+            >
+              <Feather name="user" size={28} color="gray" />
+              <TextInput
+                placeholder="Seu Nome"
+                className="flex-1 ml-2 text-gray-800"
+              />
+            </Animatable.View>
             <Animatable.View
               animation="slideInUp"
               className="flex-row flex-1 p-4 bg-white rounded-2xl"
@@ -65,7 +75,7 @@ export function SignIn() {
               >
                 <TouchableOpacity className="flex-row justify-center items-center gap-2 bg-gray-800 p-4 px-14 rounded-2xl">
                   <Text className="text-white text-xl font-semibold">
-                    Entrar
+                    Criar Conta
                   </Text>
                 </TouchableOpacity>
               </Animatable.View>
@@ -73,12 +83,10 @@ export function SignIn() {
             <View className="flex-row flex-1">
               <Animatable.View animation="slideInUp" delay={100}>
                 <TouchableOpacity
-                  onPress={() => navigation.navigate("signUp")}
+                  onPress={() => navigation.goBack()}
                   className="flex-row justify-center items-center p-4 px-14"
                 >
-                  <Text className="text-white text-xl font-light">
-                    Criar uma conta?
-                  </Text>
+                  <Text className="text-white text-xl font-light">Início</Text>
                 </TouchableOpacity>
               </Animatable.View>
             </View>

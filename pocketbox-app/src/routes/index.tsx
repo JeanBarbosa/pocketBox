@@ -6,7 +6,7 @@ import { AuthRoutes } from "./auth.routes"
 export function Routes() {
   return (
     <NavigationContainer>
-      {true ? <AppRoutes /> : <AuthRoutes />}
+      {false ? <AppRoutes /> : <AuthRoutes />}
     </NavigationContainer>
   )
 }
