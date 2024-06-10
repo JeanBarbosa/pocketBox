@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
 } from "react-native"
 import { ProductCard } from "../components/ProductCard"
+import { Header } from "../components/Header"
 
 export function HomeScreen() {
   const [activeCategory, setActiveCategory] = useState("Smartphones")
@@ -65,27 +66,8 @@ export function HomeScreen() {
           source={require("../assets/bg.png")}
         />
         <SafeAreaView className="flex-1">
-          <View className="flex-row justify-between items-center mx-4">
-            <View>
-              <Feather
-                name="list"
-                size={25}
-                color="black"
-                className="bg-white shadow-md rounded-2xl p-3"
-              />
-            </View>
-            <View
-              className="rounded-2xl"
-              style={{ backgroundColor: "rgba(255,255,255,0.7)", padding: 3 }}
-            >
-              <Image
-                style={{ backgroundColor: "rgba(255,255,255,0.7)" }}
-                source={{ uri: "https://github.com/jeanbarbosa.png" }}
-                className="h-12 w-12 rounded-2xl"
-              />
-            </View>
-          </View>
-          <View className="my-12 space-y-2">
+          <Header />
+          <View className="my-10 space-y-2">
             <Text className="mx-4 text-5xl font-medium text-gray-800">
               Cadastre
             </Text>
