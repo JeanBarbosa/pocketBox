@@ -44,7 +44,9 @@ export function ProductCard({ product, index }: ProductCardProps) {
           {true ? (
             <TouchableOpacity
               className="bg-white p-3 rounded-full"
-              onPress={() => navigation.navigate("productDetail", { product })}
+              onPress={() =>
+                navigation.navigate("productDetail", { ...product })
+              }
             >
               <Feather name="shopping-bag" size={20} color="black" />
             </TouchableOpacity>

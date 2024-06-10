@@ -8,7 +8,7 @@ import { ProductDetailScreen } from "../screens/ProductDetailScreen"
 
 export type AppRoutesProps = {
   home: undefined
-  productDetail: { product: ProductDTO }
+  productDetail: ProductDTO
 }
 
 export type AppRoutesStackNavigatorProps =
