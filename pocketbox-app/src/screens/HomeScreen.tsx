@@ -118,6 +118,7 @@ export function HomeScreen() {
                 <Animatable.View
                   delay={index * 120}
                   animation="slideInDown"
+                  useNativeDriver={true}
                   key={index}
                 >
                   <TouchableOpacity
@@ -146,8 +147,10 @@ export function HomeScreen() {
           >
             {items
               //.filter((item) => item.category === activeCategory)
-              .map((item) => {
-                return <ProductCard key={item.id} product={item} />
+              .map((item, index) => {
+                return (
+                  <ProductCard key={item.id} product={item} index={index} />
+                )
               })}
           </ScrollView>
         </SafeAreaView>
