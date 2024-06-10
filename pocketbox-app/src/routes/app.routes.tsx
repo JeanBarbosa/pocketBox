@@ -3,9 +3,12 @@ import {
   createNativeStackNavigator,
   NativeStackNavigationProp,
 } from "@react-navigation/native-stack"
+import { ProductDTO } from "../dtos/productDTO"
+import { ProductDetailScreen } from "../screens/ProductDetailScreen"
 
-type AppRoutesProps = {
+export type AppRoutesProps = {
   home: undefined
+  productDetail: { product: ProductDTO }
 }
 
 export type AppRoutesStackNavigatorProps =
@@ -21,6 +24,7 @@ export function AppRoutes() {
       }}
     >
       <Screen name="home" component={HomeScreen} />
+      <Screen name="productDetail" component={ProductDetailScreen} />
     </Navigator>
   )
 }

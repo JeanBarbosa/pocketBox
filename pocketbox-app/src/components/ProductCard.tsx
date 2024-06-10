@@ -2,22 +2,18 @@ import React from "react"
 import { Image, Text, Touchable, TouchableOpacity, View } from "react-native"
 import { Feather } from "@expo/vector-icons"
 import * as Animatable from "react-native-animatable"
-
-export type Product = {
-  id: number
-  name: string
-  price: number
-  image: string
-  category: string
-  description: string
-}
+import { useNavigation } from "@react-navigation/native"
+import { AppRoutesStackNavigatorProps } from "../routes/app.routes"
+import { ProductDTO } from "../dtos/productDTO"
 
 export type ProductCardProps = {
   index: number
-  product: Product
+  product: ProductDTO
 }
 
 export function ProductCard({ product, index }: ProductCardProps) {
+  const navigation = useNavigation<AppRoutesStackNavigatorProps>()
+
   return (
     <Animatable.View
       delay={index * 120}
@@ -46,7 +42,10 @@ export function ProductCard({ product, index }: ProductCardProps) {
           </Text>
 
           {true ? (
-            <TouchableOpacity className="bg-white p-3 rounded-full">
+            <TouchableOpacity
+              className="bg-white p-3 rounded-full"
+              onPress={() => navigation.navigate("productDetail", { product })}
+            >
               <Feather name="shopping-bag" size={20} color="black" />
             </TouchableOpacity>
           ) : (

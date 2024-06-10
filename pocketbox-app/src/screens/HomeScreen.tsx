@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
 } from "react-native"
 import { ProductCard } from "../components/ProductCard"
+
 export function HomeScreen() {
   const [activeCategory, setActiveCategory] = useState("Smartphones")
 
