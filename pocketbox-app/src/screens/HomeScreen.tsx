@@ -1,7 +1,12 @@
-import React, { useEffect, useState } from "react"
 import { Feather } from "@expo/vector-icons"
-import { SafeAreaView } from "react-native-safe-area-context"
+import { Header } from "../components/Header"
+import { Profile } from "../components/Profile"
 import * as Animatable from "react-native-animatable"
+import { ProductCard } from "../components/ProductCard"
+import React, { useEffect, useRef, useState } from "react"
+import { SafeAreaView } from "react-native-safe-area-context"
+import { useFetchProducts } from "../hooks/useFetchProducts"
+import BottomSheet from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet"
 import {
   View,
   Text,
@@ -12,13 +17,20 @@ import {
   ActivityIndicator,
   Button,
 } from "react-native"
-import { ProductCard } from "../components/ProductCard"
-import { Header } from "../components/Header"
-import { useFetchProducts } from "../hooks/useFetchProducts"
 
 export function HomeScreen() {
   const [activeCategory, setActiveCategory] = useState("Smartphones")
   const { fetchProducts, products, loading, error } = useFetchProducts()
+
+  const bottomSheetRef = useRef<BottomSheet>(null)
+
+  const handleBootomsheetOpen = () => {
+    bottomSheetRef.current?.expand()
+  }
+
+  const handleBootomsheetClose = () => {
+    bottomSheetRef.current?.snapToIndex(0)
+  }
 
   useEffect(() => {
     fetchProducts()
@@ -58,7 +70,7 @@ export function HomeScreen() {
           source={require("../assets/bg.png")}
         />
         <SafeAreaView className="flex-1">
-          <Header />
+          <Header handleBootomsheetOpen={handleBootomsheetOpen} />
           <View className="my-10 space-y-2">
             <Text className="mx-4 text-5xl font-medium text-gray-800">
               Cadastre
@@ -88,7 +100,7 @@ export function HomeScreen() {
             </TouchableOpacity>
           </View>
           <ScrollView
-            className="my-6 py-6 max-h-20"
+            className="my-6 py-3 max-h-20"
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ paddingHorizontal: 20 }}
@@ -120,7 +132,6 @@ export function HomeScreen() {
             })}
           </ScrollView>
           <ScrollView
-            className="px-4"
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{
@@ -137,6 +148,7 @@ export function HomeScreen() {
               })}
           </ScrollView>
         </SafeAreaView>
+        <Profile ref={bottomSheetRef} onClose={handleBootomsheetClose} />
       </View>
     </ScrollView>
   )

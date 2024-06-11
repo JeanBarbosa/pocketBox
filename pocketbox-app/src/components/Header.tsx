@@ -1,8 +1,12 @@
-import React from "react"
-import { Image, View } from "react-native"
+import React, { useRef } from "react"
+import { Image, TouchableOpacity, View } from "react-native"
 import { Feather } from "@expo/vector-icons"
 
-export function Header() {
+type HeaderProps = {
+  handleBootomsheetOpen: () => void
+}
+
+export function Header({ handleBootomsheetOpen }: HeaderProps) {
   return (
     <View className="flex-row justify-between items-center mx-4">
       <View>
@@ -13,7 +17,8 @@ export function Header() {
           className="bg-white shadow-md rounded-2xl p-3"
         />
       </View>
-      <View
+      <TouchableOpacity
+        onPress={handleBootomsheetOpen}
         className="rounded-2xl"
         style={{ backgroundColor: "rgba(255,255,255,0.7)", padding: 3 }}
       >
@@ -22,7 +27,7 @@ export function Header() {
           source={{ uri: "https://github.com/jeanbarbosa.png" }}
           className="h-12 w-12 rounded-2xl"
         />
-      </View>
+      </TouchableOpacity>
     </View>
   )
 }

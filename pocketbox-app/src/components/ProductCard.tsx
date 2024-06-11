@@ -22,7 +22,7 @@ export function ProductCard({ product, index }: ProductCardProps) {
     >
       <View
         style={{ backgroundColor: "rgba(255, 255, 255, 0.2)" }}
-        className="w-72 h-70 my-5 mr-6 p-3 py-5 rounded-3xl"
+        className="w-72 h-96 my-5 mr-6 p-3 py-5 rounded-3xl"
       >
         <View className="flex-row justify-center">
           <Image

@@ -1,7 +1,6 @@
 import { create } from "zustand"
 import { api } from "../services/api"
 import { ProductDTO } from "../dtos/productDTO"
-import { useAuth } from "../hooks/useAuth"
 
 interface ProductState {
   products: ProductDTO[]
