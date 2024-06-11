@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Feather } from "@expo/vector-icons"
 import { SafeAreaView } from "react-native-safe-area-context"
 import * as Animatable from "react-native-animatable"
@@ -9,13 +9,20 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
+  ActivityIndicator,
+  Button,
 } from "react-native"
 import { ProductCard } from "../components/ProductCard"
 import { Header } from "../components/Header"
-import { useAuth } from "../contexts/AuthContext"
+import { useFetchProducts } from "../hooks/useFetchProducts"
 
 export function HomeScreen() {
   const [activeCategory, setActiveCategory] = useState("Smartphones")
+  const { fetchProducts, products, loading, error } = useFetchProducts()
+
+  useEffect(() => {
+    fetchProducts()
+  }, [fetchProducts])
 
   const categories = [
     "Smartphones",
@@ -25,35 +32,19 @@ export function HomeScreen() {
     "Vscode",
     "Chrome",
   ]
-  const items = [
-    {
-      id: 1,
-      name: "Iphone 13",
-      price: 500,
-      image: "https://github.com/jeanbarbosa.png",
-      category: "Smartphones",
-      description:
-        "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    },
-    {
-      id: 2,
-      name: "Samsung S20",
-      price: 500,
-      image: "https://github.com/jeanbarbosa.png",
-      category: "Laptops",
-      description:
-        "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    },
-    {
-      id: 3,
-      name: "Codigo limpo",
-      price: 500,
-      image: "https://github.com/jeanbarbosa.png",
-      category: "Javascript",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    },
-  ]
+
+  if (!products) {
+    return <ActivityIndicator size="large" color="#0000ff" />
+  }
+
+  if (error) {
+    return (
+      <View>
+        <Text>{error}</Text>
+        <Button title="Retry" onPress={fetchProducts} />
+      </View>
+    )
+  }
 
   return (
     <ScrollView
@@ -137,7 +128,7 @@ export function HomeScreen() {
               paddingHorizontal: 20,
             }}
           >
-            {items
+            {products
               //.filter((item) => item.category === activeCategory)
               .map((item, index) => {
                 return (

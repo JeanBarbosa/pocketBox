@@ -16,7 +16,7 @@ import {
 } from "react-native"
 import { Input } from "../components/Input"
 import { api } from "../services/api"
-import { useAuth } from "../contexts/AuthContext"
+import { useAuth } from "../hooks/useAuth"
 import useAuthStore from "../storage/authStore"
 
 type FormDataProps = {
