@@ -12,6 +12,7 @@ import {
 } from "react-native"
 import { ProductCard } from "../components/ProductCard"
 import { Header } from "../components/Header"
+import { useAuth } from "../contexts/AuthContext"
 
 export function HomeScreen() {
   const [activeCategory, setActiveCategory] = useState("Smartphones")
@@ -81,11 +82,19 @@ export function HomeScreen() {
               <TextInput
                 placeholder="Encontre o que deseja..."
                 className="flex-1 ml-2 text-gray-800"
+                onSubmitEditing={() => {
+                  console.log("entrei")
+                }}
+                secureTextEntry
+                returnKeyType="send"
               />
             </View>
-            <View className="bg-yellow-500  rounded-2xl p-4">
+            <TouchableOpacity
+              className="bg-white rounded-2xl p-4"
+              onPress={() => console.log("entrei")}
+            >
               <Feather name="plus" size={28} color="black" />
-            </View>
+            </TouchableOpacity>
           </View>
           <ScrollView
             className="my-6 py-6 max-h-20"

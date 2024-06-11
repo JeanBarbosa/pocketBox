@@ -15,6 +15,9 @@ import {
   TouchableOpacity,
 } from "react-native"
 import { Input } from "../components/Input"
+import { api } from "../services/api"
+import { useAuth } from "../contexts/AuthContext"
+import useAuthStore from "../storage/authStore"
 
 type FormDataProps = {
   email: string
@@ -32,6 +35,7 @@ const signInSchema = z.object({
 
 export function SignIn() {
   const navigation = useNavigation<AuthNavigatorRoutesProps>()
+  const { login } = useAuth()
   const {
     control,
     handleSubmit,
@@ -42,7 +46,14 @@ export function SignIn() {
 
   async function handleSignIn({ email, password }: FormDataProps) {
     try {
-      console.log(email, password)
+      const response = await api.post("/auth/login", { email, password })
+
+      if (response.status !== 200) {
+        throw new Error("Usuário ou senha inválidos")
+      }
+
+      const { data } = response
+      login(data.user, data.token)
     } catch (error) {
       const title = "Não foi possível entrar. Tente novamente mais tarde."
       alert(title)

@@ -16,20 +16,25 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const auth = useAuthStore() as AuthContextProps
+  const { user, token, login, logout, isAuthenticated } = useAuthStore()
 
   useEffect(() => {
     const checkAuth = async () => {
-      const isAuthenticated = await auth.isAuthenticated()
-      if (!isAuthenticated) {
-        auth.logout()
+      if (!(await isAuthenticated())) {
+        //logout()
       }
     }
 
     checkAuth()
-  }, [auth])
+  }, [isAuthenticated, logout])
 
-  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>
+  return (
+    <AuthContext.Provider
+      value={{ user, token, login, logout, isAuthenticated }}
+    >
+      {children}
+    </AuthContext.Provider>
+  )
 }
 
 export const useAuth = (): AuthContextProps => {

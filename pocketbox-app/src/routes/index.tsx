@@ -5,11 +5,11 @@ import { AuthRoutes } from "./auth.routes"
 import { useAuth } from "../contexts/AuthContext"
 
 export function Routes() {
-  const { user } = useAuth()
+  const { isAuthenticated } = useAuth()
 
   return (
     <NavigationContainer>
-      {!!user ? <AppRoutes /> : <AuthRoutes />}
+      {isAuthenticated() ? <AppRoutes /> : <AuthRoutes />}
     </NavigationContainer>
   )
 }
