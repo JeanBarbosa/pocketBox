@@ -27,12 +27,8 @@ export class MongoDBProductRepository implements ProductRepository {
     return MongoDBProductMapper.toDomain(product);
   }
 
-  async findAll(userId: string): Promise<Product[]> {
-    const products = await this.productModel
-      .find({
-        userId,
-      })
-      .exec();
+  async findAll(): Promise<Product[]> {
+    const products = await this.productModel.find().exec();
 
     //Todo User Either
     if (!products) {

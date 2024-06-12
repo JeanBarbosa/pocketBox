@@ -13,5 +13,6 @@ export class CreateProductDto {
   @Transform(({ value }) => value.toUpperCase().trim())
   readonly category: string;
 
+  @IsNotEmpty()
   readonly description: string;
 }

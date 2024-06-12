@@ -21,7 +21,6 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 
-@UseGuards(AuthGuard)
 @Controller('products')
 export class ProductsController {
   constructor(
@@ -32,6 +31,7 @@ export class ProductsController {
     private readonly updateProductById: UpdateProductById,
   ) {}
 
+  @UseGuards(AuthGuard)
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() product: CreateProductDto, @CurrentUser() user: Auth) {
@@ -43,9 +43,10 @@ export class ProductsController {
 
   @Get()
   async findAll(@CurrentUser() user: Auth) {
-    return await this.getAllProducts.execute({ userId: user.id });
+    return await this.getAllProducts.execute();
   }
 
+  @UseGuards(AuthGuard)
   @Get(':id')
   async findOne(
     @Param('id') id: string,
@@ -54,6 +55,7 @@ export class ProductsController {
     return await this.getProductById.execute({ id, userId: user.id });
   }
 
+  @UseGuards(AuthGuard)
   @Put(':id')
   async update(
     @Param('id') id: string,
@@ -67,6 +69,7 @@ export class ProductsController {
     });
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':id')
   async delete(
     @Param('id') id: string,
