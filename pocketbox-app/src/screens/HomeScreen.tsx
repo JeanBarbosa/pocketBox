@@ -3,9 +3,11 @@ import { Header } from "../components/Header"
 import { Profile } from "../components/Profile"
 import * as Animatable from "react-native-animatable"
 import { ProductCard } from "../components/ProductCard"
+import { useNavigation } from "@react-navigation/native"
 import React, { useEffect, useRef, useState } from "react"
-import { SafeAreaView } from "react-native-safe-area-context"
 import { useFetchProducts } from "../hooks/useFetchProducts"
+import { SafeAreaView } from "react-native-safe-area-context"
+import { AppRoutesStackNavigatorProps } from "../routes/app.routes"
 import BottomSheet from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet"
 import {
   View,
@@ -17,11 +19,12 @@ import {
   ActivityIndicator,
   Button,
 } from "react-native"
+import { categories, CategoryType } from "../utils/categories"
 
 export function HomeScreen() {
-  const [activeCategory, setActiveCategory] = useState("Smartphones")
+  const navigation = useNavigation<AppRoutesStackNavigatorProps>()
+  const [activeCategory, setActiveCategory] = useState(categories[0].value)
   const { fetchProducts, products, loading, error } = useFetchProducts()
-
   const bottomSheetRef = useRef<BottomSheet>(null)
 
   const handleBootomsheetOpen = () => {
@@ -35,15 +38,6 @@ export function HomeScreen() {
   useEffect(() => {
     fetchProducts()
   }, [fetchProducts])
-
-  const categories = [
-    "Smartphones",
-    "Laptops",
-    "Javascript",
-    "Typescript",
-    "Vscode",
-    "Chrome",
-  ]
 
   if (!products) {
     return <ActivityIndicator size="large" color="#0000ff" />
@@ -65,7 +59,7 @@ export function HomeScreen() {
     >
       <View className="flex-1 relative">
         <Image
-          blurRadius={50}
+          blurRadius={60}
           className="absolute w-full h-full"
           source={require("../assets/bg.png")}
         />
@@ -94,7 +88,7 @@ export function HomeScreen() {
             </View>
             <TouchableOpacity
               className="bg-white rounded-2xl p-4"
-              onPress={() => console.log("entrei")}
+              onPress={() => navigation.navigate("edit")}
             >
               <Feather name="plus" size={28} color="black" />
             </TouchableOpacity>
@@ -106,7 +100,7 @@ export function HomeScreen() {
             contentContainerStyle={{ paddingHorizontal: 20 }}
           >
             {categories.map((category, index) => {
-              let isActive = category === activeCategory
+              let isActive = category.value === activeCategory
               let textClass = isActive ? "font-bold" : ""
 
               return (
@@ -119,12 +113,12 @@ export function HomeScreen() {
                   <TouchableOpacity
                     key={index}
                     className="mr-9"
-                    onPress={() => setActiveCategory(category)}
+                    onPress={() => setActiveCategory(category.value)}
                   >
                     <Text
                       className={`text-white text-base tracking-widest ${textClass}`}
                     >
-                      {category}
+                      {category.label}
                     </Text>
                   </TouchableOpacity>
                 </Animatable.View>

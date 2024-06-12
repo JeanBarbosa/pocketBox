@@ -1,14 +1,16 @@
+import { EditScreen } from "../screens/EditScreen"
+import { ProductDTO } from "../dtos/productDTO"
 import { HomeScreen } from "../screens/HomeScreen"
+import { ProductDetailScreen } from "../screens/ProductDetailScreen"
 import {
   createNativeStackNavigator,
   NativeStackNavigationProp,
 } from "@react-navigation/native-stack"
-import { ProductDTO } from "../dtos/productDTO"
-import { ProductDetailScreen } from "../screens/ProductDetailScreen"
 
 export type AppRoutesProps = {
   home: undefined
   productDetail: ProductDTO
+  edit: undefined
 }
 
 export type AppRoutesStackNavigatorProps =
@@ -25,6 +27,7 @@ export function AppRoutes() {
     >
       <Screen name="home" component={HomeScreen} />
       <Screen name="productDetail" component={ProductDetailScreen} />
+      <Screen name="edit" component={EditScreen} />
     </Navigator>
   )
 }

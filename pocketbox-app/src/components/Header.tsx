@@ -8,19 +8,11 @@ type HeaderProps = {
 
 export function Header({ handleBootomsheetOpen }: HeaderProps) {
   return (
-    <View className="flex-row justify-between items-center mx-4">
-      <View>
-        <Feather
-          name="list"
-          size={25}
-          color="black"
-          className="bg-white shadow-md rounded-2xl p-3"
-        />
-      </View>
+    <View className="flex-row-reverse justify-between items-center mt-2 mx-4">
       <TouchableOpacity
         onPress={handleBootomsheetOpen}
         className="rounded-2xl"
-        style={{ backgroundColor: "rgba(255,255,255,0.7)", padding: 3 }}
+        style={{ backgroundColor: "#fff", padding: 2 }}
       >
         <Image
           style={{ backgroundColor: "rgba(255,255,255,0.7)" }}

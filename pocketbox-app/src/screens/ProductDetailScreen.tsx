@@ -68,7 +68,7 @@ export function ProductDetailScreen({ route, navigation }: any) {
             className="flex items-center space-y-2"
           >
             <Feather name="heart" size={24} color="black" />
-            <Text>Favoritar</Text>
+            <Text>{item.category}</Text>
           </Animatable.View>
 
           <Animatable.View
@@ -76,8 +76,8 @@ export function ProductDetailScreen({ route, navigation }: any) {
             animation="slideInDown"
             className="flex items-center space-y-2"
           >
-            <Feather name="heart" size={24} color="black" />
-            <Text>Favoritar</Text>
+            <Feather name="calendar" size={24} color="black" />
+            <Text>{new Date().toLocaleDateString()}</Text>
           </Animatable.View>
 
           <Animatable.View
@@ -85,8 +85,8 @@ export function ProductDetailScreen({ route, navigation }: any) {
             animation="slideInDown"
             className="flex items-center space-y-2"
           >
-            <Feather name="heart" size={24} color="black" />
-            <Text>Favoritar</Text>
+            <Feather name="trash" size={24} color="black" />
+            <Text>Apagar</Text>
           </Animatable.View>
         </View>
         <View className="mt-6 mx-4 space-y-2 h-60">

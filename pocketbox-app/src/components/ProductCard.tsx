@@ -1,10 +1,11 @@
 import React from "react"
-import { Image, Text, Touchable, TouchableOpacity, View } from "react-native"
+import { useAuth } from "../hooks/useAuth"
 import { Feather } from "@expo/vector-icons"
+import { ProductDTO } from "../dtos/productDTO"
 import * as Animatable from "react-native-animatable"
 import { useNavigation } from "@react-navigation/native"
+import { Image, Text, TouchableOpacity, View } from "react-native"
 import { AppRoutesStackNavigatorProps } from "../routes/app.routes"
-import { ProductDTO } from "../dtos/productDTO"
 
 export type ProductCardProps = {
   index: number
@@ -13,6 +14,7 @@ export type ProductCardProps = {
 
 export function ProductCard({ product, index }: ProductCardProps) {
   const navigation = useNavigation<AppRoutesStackNavigatorProps>()
+  const { user } = useAuth()
 
   return (
     <Animatable.View
@@ -21,7 +23,7 @@ export function ProductCard({ product, index }: ProductCardProps) {
       useNativeDriver={true}
     >
       <View
-        style={{ backgroundColor: "rgba(255, 255, 255, 0.2)" }}
+        style={{ backgroundColor: "rgba(255, 255, 255, 0.4)" }}
         className="w-72 h-96 my-5 mr-6 p-3 py-5 rounded-3xl"
       >
         <View className="flex-row justify-center">
@@ -41,7 +43,7 @@ export function ProductCard({ product, index }: ProductCardProps) {
             R${product.price}
           </Text>
 
-          {true ? (
+          {user?.id !== product.userId ? (
             <TouchableOpacity
               className="bg-white p-3 rounded-full"
               onPress={() =>
@@ -51,8 +53,13 @@ export function ProductCard({ product, index }: ProductCardProps) {
               <Feather name="shopping-bag" size={20} color="black" />
             </TouchableOpacity>
           ) : (
-            <TouchableOpacity className="bg-white p-3 rounded-full">
-              <Feather name="edit" size={20} color="black" />
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("productDetail", { ...product })
+              }
+              className="bg-white p-3 rounded-full"
+            >
+              <Feather name="eye" size={20} color="black" />
             </TouchableOpacity>
           )}
         </View>

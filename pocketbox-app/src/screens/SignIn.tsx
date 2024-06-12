@@ -17,7 +17,6 @@ import {
 import { Input } from "../components/Input"
 import { api } from "../services/api"
 import { useAuth } from "../hooks/useAuth"
-import useAuthStore from "../storage/authStore"
 
 type FormDataProps = {
   email: string
