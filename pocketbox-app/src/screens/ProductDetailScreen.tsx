@@ -1,13 +1,38 @@
 import React from "react"
-import { Image, Text, TouchableOpacity, View } from "react-native"
+import { Image, Text, TouchableOpacity, View, Alert } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { Feather } from "@expo/vector-icons"
 import * as Animatable from "react-native-animatable"
+import { useAuth } from "../hooks/useAuth"
+import useProductStore from "../storage/productStore"
 
 // type Props = NativeStackScreenProps<AppRoutesProps, "home", "productDetail">
 
 export function ProductDetailScreen({ route, navigation }: any) {
   const item = route.params
+  const { user } = useAuth()
+  const { deleteProduct, loading, error } = useProductStore()
+
+  function handleDelete() {
+    try {
+      Alert.alert("Apagar", "Deseja mesmo apagar este produto?", [
+        {
+          text: "Cancelar",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: () => {
+            deleteProduct(item.id)
+            navigation.goBack()
+          },
+        },
+      ])
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <View className="flex-1 bg-white">
@@ -67,7 +92,7 @@ export function ProductDetailScreen({ route, navigation }: any) {
             animation="slideInDown"
             className="flex items-center space-y-2"
           >
-            <Feather name="heart" size={24} color="black" />
+            <Feather name="hash" size={24} color="black" />
             <Text>{item.category}</Text>
           </Animatable.View>
 
@@ -79,15 +104,27 @@ export function ProductDetailScreen({ route, navigation }: any) {
             <Feather name="calendar" size={24} color="black" />
             <Text>{new Date().toLocaleDateString()}</Text>
           </Animatable.View>
-
-          <Animatable.View
-            delay={480}
-            animation="slideInDown"
-            className="flex items-center space-y-2"
-          >
-            <Feather name="trash" size={24} color="black" />
-            <Text>Apagar</Text>
-          </Animatable.View>
+          {user?.id === item.userId ? (
+            <Animatable.View
+              delay={480}
+              animation="slideInDown"
+              className="flex items-center space-y-2"
+            >
+              <TouchableOpacity onPress={handleDelete}>
+                <Feather name="trash" size={24} color="black" />
+                <Text>Apagar</Text>
+              </TouchableOpacity>
+            </Animatable.View>
+          ) : (
+            <Animatable.View
+              delay={480}
+              animation="slideInDown"
+              className="flex items-center space-y-2"
+            >
+              <Feather name="tag" size={24} color="black" />
+              <Text>1</Text>
+            </Animatable.View>
+          )}
         </View>
         <View className="mt-6 mx-4 space-y-2 h-60">
           <Animatable.Text

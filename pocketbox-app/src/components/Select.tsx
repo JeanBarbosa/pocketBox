@@ -51,9 +51,14 @@ export const Select: React.FC<SelectProps> = ({
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
       >
-        <View style={styles.modalOverlay}>
+        <View
+          style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+          className="flex-1 justify-center"
+        >
           <View style={styles.modalContainer}>
-            <Text style={styles.modalTitle}>Selecionar Categoria</Text>
+            <Text className="text-xl font-bold text-black">
+              Selecionar Categoria
+            </Text>
             <FlatList
               data={options}
               keyExtractor={(item) => item.value}
@@ -81,11 +86,6 @@ export const Select: React.FC<SelectProps> = ({
 }
 
 const styles = StyleSheet.create({
-  modalOverlay: {
-    flex: 1,
-    justifyContent: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-  },
   modalContainer: {
     backgroundColor: "white",
     margin: 20,
@@ -96,9 +96,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,
-  },
-  modalTitle: {
-    fontSize: 20,
-    marginBottom: 10,
   },
 })

@@ -32,7 +32,7 @@ const signInSchema = z.object({
     .min(6, "mínimo 6 caracteres"),
 })
 
-export function SignIn() {
+export function SignInScreen() {
   const navigation = useNavigation<AuthNavigatorRoutesProps>()
   const { login } = useAuth()
   const {

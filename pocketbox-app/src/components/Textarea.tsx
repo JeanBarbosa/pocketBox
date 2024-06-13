@@ -6,7 +6,7 @@ interface TextareaProps extends TextInputProps {
 
 export const Textarea = ({ style, ...props }: TextareaProps) => {
   return (
-    <View className="border border-gray-300 rounded-md p-2">
+    <View className=" border border-gray-300 rounded-md">
       <TextInput
         className="text-base h-20"
         multiline

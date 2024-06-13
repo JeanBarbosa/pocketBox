@@ -39,6 +39,14 @@ export function HomeScreen() {
     fetchProducts()
   }, [fetchProducts])
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      fetchProducts()
+    })
+
+    return unsubscribe
+  }, [navigation])
+
   if (!products) {
     return <ActivityIndicator size="large" color="#0000ff" />
   }
