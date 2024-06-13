@@ -23,7 +23,7 @@ export function ProductCard({ product, index }: ProductCardProps) {
       useNativeDriver={true}
     >
       <View
-        style={{ backgroundColor: "rgba(255, 255, 255, 0.4)" }}
+        style={{ backgroundColor: "rgba(255, 255, 255, 0.2)" }}
         className="w-72 h-96 my-5 mr-6 p-3 py-5 rounded-3xl"
       >
         <View className="flex-row justify-center">

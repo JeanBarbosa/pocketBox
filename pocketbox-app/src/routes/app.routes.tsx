@@ -10,7 +10,7 @@ import {
 export type AppRoutesProps = {
   home: undefined
   productDetail: ProductDTO
-  edit: undefined
+  edit: ProductDTO | undefined
 }
 
 export type AppRoutesStackNavigatorProps =

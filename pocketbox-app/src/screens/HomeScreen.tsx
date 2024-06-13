@@ -87,8 +87,9 @@ export function HomeScreen() {
               <TextInput
                 placeholder="Encontre o que deseja..."
                 className="flex-1 ml-2 text-gray-800"
+                onChangeText={() => console.log("digitando...")}
                 onSubmitEditing={() => {
-                  console.log("entrei")
+                  console.log("enviando...")
                 }}
                 secureTextEntry
                 returnKeyType="send"

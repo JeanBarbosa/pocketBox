@@ -6,7 +6,14 @@ import * as Animatable from "react-native-animatable"
 import { useNavigation } from "@react-navigation/native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { AppRoutesStackNavigatorProps } from "../routes/app.routes"
-import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native"
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  Alert,
+} from "react-native"
 import { Input } from "../components/Input"
 import { Select } from "../components/Select"
 import { Textarea } from "../components/Textarea"
@@ -30,15 +37,25 @@ const productSchema = z.object({
   description: z.string({ required_error: "Descrição obrigatória" }),
 })
 
-export function EditScreen() {
+export function EditScreen({ route }: any) {
   const navigation = useNavigation<AppRoutesStackNavigatorProps>()
-  const { addProduct, loading, error } = useProductStore()
+  const { addProduct, updateProduct } = useProductStore()
+  const product = route.params
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormDataProps>({
     resolver: zodResolver(productSchema),
+    defaultValues: !!product
+      ? {
+          name: product.name,
+          price: product.price.toString(),
+          category: product.category,
+          description: product.description,
+        }
+      : {},
   })
 
   async function handleSave({
@@ -48,15 +65,48 @@ export function EditScreen() {
     description,
   }: FormDataProps) {
     try {
-      await addProduct({
-        id: "",
-        userId: "",
-        image: "https://github.com/jeanbarbosa.png",
-        name,
-        price: parseInt(price),
-        category,
-        description,
-      })
+      if (!product) {
+        await addProduct({
+          id: "",
+          userId: "",
+          image: "https://github.com/jeanbarbosa.png",
+          name,
+          price: parseInt(price),
+          category,
+          description,
+        })
+
+        Alert.alert("Sucesso", "Produto salvo com sucesso!", [
+          {
+            text: "Home",
+            onPress: () => navigation.goBack(),
+            style: "cancel",
+          },
+          {
+            text: "Novo Produto",
+            onPress: () => {
+              reset()
+            },
+          },
+        ])
+      } else {
+        await updateProduct({
+          ...product,
+          image: "https://github.com/jeanbarbosa.png",
+          name,
+          price: parseInt(price),
+          category,
+          description,
+        })
+
+        Alert.alert("Sucesso", "Produto salvo com sucesso!", [
+          {
+            text: "Home",
+            onPress: () => navigation.goBack(),
+            style: "cancel",
+          },
+        ])
+      }
     } catch (error) {
       console.log(error)
     }
@@ -84,7 +134,7 @@ export function EditScreen() {
           </View>
           <View className="my-10 space-y-2">
             <Text className="mx-4 text-5xl font-medium text-gray-800">
-              Novo Produto
+              {!!product ? "Editar" : "Adicionar"} Produto
             </Text>
           </View>
           <View className="mx-4 flex justify-between items-center gap-3">
@@ -92,10 +142,14 @@ export function EditScreen() {
               <Controller
                 control={control}
                 name="name"
-                render={({ field: { onChange } }) => (
+                render={({ field: { onChange, value } }) => (
                   <Input hasError={!!errors.name}>
                     <Feather name="tag" size={20} color="gray" />
-                    <Input.Field placeholder="Nome" onChangeText={onChange} />
+                    <Input.Field
+                      placeholder="Nome"
+                      value={value}
+                      onChangeText={onChange}
+                    />
                   </Input>
                 )}
               />
@@ -104,10 +158,11 @@ export function EditScreen() {
               <Controller
                 control={control}
                 name="price"
-                render={({ field: { onChange } }) => (
+                render={({ field: { onChange, value } }) => (
                   <Input hasError={!!errors.name}>
                     <MaterialIcons name="attach-money" size={20} color="gray" />
                     <Input.Field
+                      value={value}
                       keyboardType="numeric"
                       placeholder="Preço"
                       onChangeText={onChange}
@@ -141,8 +196,12 @@ export function EditScreen() {
               <Controller
                 control={control}
                 name="description"
-                render={({ field: { onChange } }) => (
-                  <Textarea placeholder="Descrição" onChangeText={onChange} />
+                render={({ field: { onChange, value } }) => (
+                  <Textarea
+                    placeholder="Descrição"
+                    defaultValue={value}
+                    onChangeText={onChange}
+                  />
                 )}
               />
             </Animatable.View>

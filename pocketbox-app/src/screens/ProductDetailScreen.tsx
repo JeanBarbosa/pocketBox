@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Image, Text, TouchableOpacity, View, Alert } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { Feather } from "@expo/vector-icons"
@@ -6,12 +6,11 @@ import * as Animatable from "react-native-animatable"
 import { useAuth } from "../hooks/useAuth"
 import useProductStore from "../storage/productStore"
 
-// type Props = NativeStackScreenProps<AppRoutesProps, "home", "productDetail">
-
 export function ProductDetailScreen({ route, navigation }: any) {
   const item = route.params
   const { user } = useAuth()
-  const { deleteProduct, loading, error } = useProductStore()
+  const [count, setCount] = useState(1)
+  const { deleteProduct } = useProductStore()
 
   function handleDelete() {
     try {
@@ -34,6 +33,10 @@ export function ProductDetailScreen({ route, navigation }: any) {
     }
   }
 
+  function handleEditProduct() {
+    navigation.navigate("edit", item)
+  }
+
   return (
     <View className="flex-1 bg-white">
       <Image
@@ -53,9 +56,16 @@ export function ProductDetailScreen({ route, navigation }: any) {
           >
             <Feather name="chevron-left" size={24} />
           </TouchableOpacity>
-          <TouchableOpacity className="bg-white p-3 rounded-2xl shadow">
-            <Feather name="edit" size={24} />
-          </TouchableOpacity>
+          {user?.id === item.userId ? (
+            <TouchableOpacity
+              onPress={handleDelete}
+              className="bg-red-500 p-3 rounded-2xl shadow"
+            >
+              <Feather name="trash" size={24} color="white" />
+            </TouchableOpacity>
+          ) : (
+            ""
+          )}
         </View>
 
         <View className="flex justify-center items-center">
@@ -68,11 +78,17 @@ export function ProductDetailScreen({ route, navigation }: any) {
         </View>
         <View className="flex-row justify-center items-center mt-12">
           <View className="flex-row justify-between items-center bg-gray-100 rounded-2xl space-x-3">
-            <TouchableOpacity className="bg-white rounded-2xl border-2 border-gray-200 p-3">
+            <TouchableOpacity
+              onPress={() => setCount(count >= 2 ? count - 1 : 1)}
+              className="bg-white rounded-2xl border-2 border-gray-200 p-3"
+            >
               <Feather name="minus" size={20} color="black" />
             </TouchableOpacity>
-            <Text className="text-xl mx-3 text-black">1</Text>
-            <TouchableOpacity className="bg-white rounded-2xl border-2 border-gray-200 p-3">
+            <Text className="text-xl mx-3 text-black">{count}</Text>
+            <TouchableOpacity
+              onPress={() => setCount(count + 1)}
+              className="bg-white rounded-2xl border-2 border-gray-200 p-3"
+            >
               <Feather name="plus" size={20} color="black" />
             </TouchableOpacity>
           </View>
@@ -93,7 +109,7 @@ export function ProductDetailScreen({ route, navigation }: any) {
             className="flex items-center space-y-2"
           >
             <Feather name="hash" size={24} color="black" />
-            <Text>{item.category}</Text>
+            <Text>{item.category.substring(0, 5) + "..."}</Text>
           </Animatable.View>
 
           <Animatable.View
@@ -104,27 +120,15 @@ export function ProductDetailScreen({ route, navigation }: any) {
             <Feather name="calendar" size={24} color="black" />
             <Text>{new Date().toLocaleDateString()}</Text>
           </Animatable.View>
-          {user?.id === item.userId ? (
-            <Animatable.View
-              delay={480}
-              animation="slideInDown"
-              className="flex items-center space-y-2"
-            >
-              <TouchableOpacity onPress={handleDelete}>
-                <Feather name="trash" size={24} color="black" />
-                <Text>Apagar</Text>
-              </TouchableOpacity>
-            </Animatable.View>
-          ) : (
-            <Animatable.View
-              delay={480}
-              animation="slideInDown"
-              className="flex items-center space-y-2"
-            >
-              <Feather name="tag" size={24} color="black" />
-              <Text>1</Text>
-            </Animatable.View>
-          )}
+
+          <Animatable.View
+            delay={480}
+            animation="slideInDown"
+            className="flex items-center space-y-2"
+          >
+            <Feather name="tag" size={24} color="black" />
+            <Text>1</Text>
+          </Animatable.View>
         </View>
         <View className="mt-6 mx-4 space-y-2 h-60">
           <Animatable.Text
@@ -149,10 +153,22 @@ export function ProductDetailScreen({ route, navigation }: any) {
             R$ {item.price}
           </Animatable.Text>
           <Animatable.View animation="slideInRight">
-            <TouchableOpacity className="flex-row justify-center items-center gap-2 bg-gray-800 p-4 px-14 rounded-2xl">
-              <Feather name="shopping-bag" size={24} color="white" />
-              <Text className="text-white text-xl font-semibold">Comprar</Text>
-            </TouchableOpacity>
+            {user?.id === item.userId ? (
+              <TouchableOpacity
+                onPress={handleEditProduct}
+                className="flex-row justify-center items-center gap-2 border-2 border-gray-800 p-4 px-14 rounded-2xl"
+              >
+                <Feather name="edit" size={24} color="black" />
+                <Text className="text-black text-xl font-semibold">Editar</Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity className="flex-row justify-center items-center gap-2 bg-gray-800 p-4 px-14 rounded-2xl">
+                <Feather name="shopping-bag" size={24} color="white" />
+                <Text className="text-white text-xl font-semibold">
+                  Comprar
+                </Text>
+              </TouchableOpacity>
+            )}
           </Animatable.View>
         </View>
       </SafeAreaView>
