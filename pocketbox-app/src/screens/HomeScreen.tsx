@@ -20,12 +20,14 @@ import {
   Button,
 } from "react-native"
 import { categories, CategoryType } from "../utils/categories"
+import { useAuth } from "../hooks/useAuth"
 
 export function HomeScreen() {
   const navigation = useNavigation<AppRoutesStackNavigatorProps>()
   const [activeCategory, setActiveCategory] = useState(categories[0].value)
   const { fetchProducts, products, loading, error } = useFetchProducts()
   const bottomSheetRef = useRef<BottomSheet>(null)
+  const { user, logout } = useAuth()
 
   const handleBootomsheetOpen = () => {
     bottomSheetRef.current?.expand()
@@ -151,7 +153,12 @@ export function HomeScreen() {
               })}
           </ScrollView>
         </SafeAreaView>
-        <Profile ref={bottomSheetRef} onClose={handleBootomsheetClose} />
+        <Profile
+          ref={bottomSheetRef}
+          user={user}
+          logout={logout}
+          onClose={handleBootomsheetClose}
+        />
       </View>
     </ScrollView>
   )

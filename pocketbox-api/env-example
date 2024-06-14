@@ -7,4 +7,4 @@ AUTH_JWT_SECRET='secret'
 AUTH_JWT_TOKEN_EXPIRES_IN='1d'
 
 #database
-URI=""
+URI="mongodb+srv://MongoDB:WuGizmaG34FqV465@cluster0.nsmrz0e.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"

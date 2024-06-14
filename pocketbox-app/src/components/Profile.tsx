@@ -1,17 +1,17 @@
 import { forwardRef } from "react"
-import { useAuth } from "../hooks/useAuth"
 import BottomSheet from "@gorhom/bottom-sheet"
 import { FontAwesome } from "@expo/vector-icons"
 import { Image, Text, TouchableOpacity, View } from "react-native"
+import { User } from "../storage/authStore"
 
 type MenuProps = {
+  user: User | null
+  logout: () => void
   onClose: () => void
 }
 
 export const Profile = forwardRef<BottomSheet, MenuProps>(
-  ({ onClose }, ref) => {
-    const { user, logout } = useAuth()
-
+  ({ onClose, user, logout }, ref) => {
     return (
       <BottomSheet
         ref={ref}

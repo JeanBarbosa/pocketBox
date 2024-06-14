@@ -2,7 +2,7 @@ import { TextInput, View, TextInputProps } from "react-native"
 
 type InputProps = {
   children: React.ReactNode
-  hasError: boolean
+  hasError?: boolean
 }
 
 function Input({ hasError, children }: InputProps) {
