@@ -1,4 +1,4 @@
-NODE_ENV=development
+NODE_ENV=production
 APP_NAME='pocketbox-api'
 APP_PORT=3000
 
@@ -7,4 +7,4 @@ AUTH_JWT_SECRET='secret'
 AUTH_JWT_TOKEN_EXPIRES_IN='1d'
 
 #database
-URI="mongodb+srv://MongoDB:WuGizmaG34FqV465@cluster0.nsmrz0e.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+MONGODB_URI='mongodb://root:example@mongo:27017/admin'
