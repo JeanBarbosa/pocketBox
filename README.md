@@ -45,7 +45,7 @@ Visualizar resultado:
 
 - [PocketBox - API](https://github.com/JeanBarbosa/pocketBox/tree/main/pocketbox-api)
 
-- [PocketBox - APP ](https://github.com/JeanBarbosa/PocketBox/tree/master/app)
+- [PocketBox - APP ](https://github.com/JeanBarbosa/pocketBox/tree/main/pocketbox-app)
 
 ## :information_source: Como usar
 
@@ -55,6 +55,7 @@ Visualizar resultado:
 $ git clone https://github.com/JeanBarbosa/pocketBox.git && cd pocketbox-api
 
 # Install dependencies
+$ cp env-example .env
 $ docker compose build
 $ docker compose up
 
