@@ -28,13 +28,6 @@ desafio descrição
   </a>
 </p>
 
-<p align="center">
-  <a target="_blank"  href ="#Falemais">Sobre</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-    <a target="_blank"  href ="#rocket-preview">Preview</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a target="_blank"  href ="#information_source-how-to-use">Instalação</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a target="_blank"  href ="#memo-license">Licença</a>
-</p>
-
 # PocketBox
 
 Cadastre, simplifique suas compras!!
@@ -47,7 +40,7 @@ Visualizar resultado:
 
 - [PocketBox - APP ](https://github.com/JeanBarbosa/pocketBox/tree/main/pocketbox-app)
 
-## :information_source: Como usar
+## Como usar
 
 ```bash
 
@@ -64,7 +57,7 @@ $ docker compose up
 $ npm run seed
 ```
 
-## :information_source2: App
+## App
 
 ```bash
 
