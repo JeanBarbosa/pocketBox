@@ -64,11 +64,26 @@ $ docker compose up
 $ npm run seed
 ```
 
+## :information_source2: App
+
+```bash
+
+# Install dependencies
+$ cd pocketBox/pocketbox-app
+$ npm install
+
+# Gerando o .env com IP:
+$ node setup_env_ip.js
+
+$ npx expo start --clear
+
+```
+
 ## tests:
 
 ```bash
 
-$ yarn test
+$ npm test
 
 ```
 
