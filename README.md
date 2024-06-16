@@ -52,9 +52,10 @@ Visualizar resultado:
 ```bash
 
 # Clone repository:
-$ git clone https://github.com/JeanBarbosa/pocketBox.git && cd pocketbox-api
+$ git clone https://github.com/JeanBarbosa/pocketBox.git
 
 # Install dependencies
+$ cd pocketBox/pocketbox-api
 $ cp env-example .env
 $ docker compose build
 $ docker compose up
