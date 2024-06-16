@@ -12,4 +12,4 @@ FROM node:18
 
 WORKDIR /app
 COPY --from=build /app ./
-CMD ["npm", "run", "start:prod"]
+CMD ["npm", "run", "start:dev"]

@@ -14,7 +14,7 @@ services:
       - /app/node_modules
     depends_on:
       - mongo
-    command: npm run start:prod
+    command: npm run start:dev
 
   mongo:
     image: mongo:5

@@ -60,6 +60,8 @@ $ cp env-example .env
 $ docker compose build
 $ docker compose up
 
+# Seeds
+$ npm run seed
 ```
 
 ## tests:
