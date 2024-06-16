@@ -87,7 +87,7 @@ export function SignUpScreen() {
               Cadastre
             </Text>
             <Text className="mx-4 text-5xl font-medium text-gray-800">
-              <Text className="font-extrabold">Simplifique</Text> seu Controle!
+              <Text className="font-extrabold">Simplifique</Text> suas Compras!
             </Text>
           </View>
           <View className="mx-4 flex justify-between items-center gap-3">

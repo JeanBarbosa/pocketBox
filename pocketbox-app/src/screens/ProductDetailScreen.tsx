@@ -5,6 +5,7 @@ import { Feather } from "@expo/vector-icons"
 import * as Animatable from "react-native-animatable"
 import { useAuth } from "../hooks/useAuth"
 import useProductStore from "../storage/productStore"
+import { ImageUpload } from "../components/ImageUpload"
 
 export function ProductDetailScreen({ route, navigation }: any) {
   const item = route.params
@@ -69,10 +70,7 @@ export function ProductDetailScreen({ route, navigation }: any) {
         </View>
 
         <View className="flex justify-center items-center">
-          <Image
-            source={{ uri: "https://github.com/jeanbarbosa.png" }}
-            className="h-48 w-48 rounded-2xl"
-          />
+          <ImageUpload product={item} />
 
           <Text className="text-3xl text-white">{item.name}</Text>
         </View>

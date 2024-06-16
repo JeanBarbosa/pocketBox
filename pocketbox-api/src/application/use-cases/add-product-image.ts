@@ -2,27 +2,18 @@ import { Injectable } from '@nestjs/common';
 import { ProductRepository } from '../repositories/product-repository';
 import { Product } from '../entities/product';
 
-interface ProductFieldsForUpdateRequest {
-  image?: string;
-  quantity?: number;
-  name?: string;
-  price?: number;
-  category?: string;
-  description?: string;
-}
-
 interface UpdateProductRequest {
-  id: string;
   userId: string;
-  product: ProductFieldsForUpdateRequest;
+  id: string;
+  image: string;
 }
 
 @Injectable()
-export class UpdateProductById {
+export class AddProductImage {
   constructor(private productRepository: ProductRepository) {}
 
   async execute(data: UpdateProductRequest) {
-    const { product, id, userId } = data;
+    const { id, image, userId } = data;
 
     const productExists = await this.productRepository.findOne(id);
 
@@ -37,7 +28,7 @@ export class UpdateProductById {
     const productForUpdate = new Product({
       id,
       ...productExists.toJSON(),
-      ...product,
+      image,
     });
 
     return await this.productRepository.update(id, productForUpdate);

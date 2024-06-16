@@ -27,10 +27,7 @@ export function ProductCard({ product, index }: ProductCardProps) {
         className="w-72 h-96 my-5 mr-6 p-3 py-5 rounded-3xl"
       >
         <View className="flex-row justify-center">
-          <Image
-            source={{ uri: "https://github.com/jeanbarbosa.png" }}
-            className="w-32 h-32"
-          />
+          <Image source={{ uri: product.image }} className="w-32 h-32" />
         </View>
         <View className="flex-1 px-3 py-2 space-y-2">
           <Text className="text-white text-xl font-medium tracking-wider">

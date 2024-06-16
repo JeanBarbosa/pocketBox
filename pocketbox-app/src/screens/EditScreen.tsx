@@ -199,6 +199,7 @@ export function EditScreen({ route }: any) {
                 render={({ field: { onChange, value } }) => (
                   <Textarea
                     placeholder="Descrição"
+                    maxLength={200}
                     defaultValue={value}
                     onChangeText={onChange}
                   />

@@ -49,19 +49,6 @@ export function HomeScreen() {
     return unsubscribe
   }, [navigation])
 
-  if (!products) {
-    return <ActivityIndicator size="large" color="#0000ff" />
-  }
-
-  if (error) {
-    return (
-      <View>
-        <Text>{error}</Text>
-        <Button title="Retry" onPress={fetchProducts} />
-      </View>
-    )
-  }
-
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -80,7 +67,7 @@ export function HomeScreen() {
               Cadastre
             </Text>
             <Text className="mx-4 text-5xl font-medium text-gray-800">
-              <Text className="font-extrabold">Simplifique</Text> seu Controle!
+              <Text className="font-extrabold">Simplifique</Text> suas Compras!
             </Text>
           </View>
           <View className="mx-4 flex-row justify-between items-center gap-3">
@@ -136,22 +123,33 @@ export function HomeScreen() {
               )
             })}
           </ScrollView>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{
-              height: "100%",
-              paddingHorizontal: 20,
-            }}
-          >
-            {products
-              //.filter((item) => item.category === activeCategory)
-              .map((item, index) => {
-                return (
-                  <ProductCard key={item.id} product={item} index={index} />
-                )
-              })}
-          </ScrollView>
+
+          {!products ? (
+            <ActivityIndicator size="large" color="#0000ff" />
+          ) : (
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{
+                height: "100%",
+                paddingHorizontal: 20,
+              }}
+            >
+              {products
+                //.filter((item) => item.category === activeCategory)
+                .map((item, index) => {
+                  return (
+                    <ProductCard key={item.id} product={item} index={index} />
+                  )
+                })}
+            </ScrollView>
+          )}
+          {error && (
+            <View className="flex-1 justify-center items-center mt-4">
+              <Text className="text-red-500 font-light">{error}</Text>
+              <Button title="Repetir" onPress={fetchProducts} />
+            </View>
+          )}
         </SafeAreaView>
         <Profile
           ref={bottomSheetRef}

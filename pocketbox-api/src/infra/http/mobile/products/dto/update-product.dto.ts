@@ -5,6 +5,13 @@ export class UpdateProductDto {
   name?: string;
 
   @IsOptional()
+  image?: string;
+
+  @IsOptional()
+  @IsNumber()
+  quantity?: number;
+
+  @IsOptional()
   @IsNumber()
   price?: number;
 

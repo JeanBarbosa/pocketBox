@@ -6,14 +6,7 @@ import * as Animatable from "react-native-animatable"
 import { useNavigation } from "@react-navigation/native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { AuthNavigatorRoutesProps } from "../routes/auth.routes"
-import {
-  View,
-  Text,
-  Image,
-  TextInput,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native"
+import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native"
 import { Input } from "../components/Input"
 import { api } from "../services/api"
 import { useAuth } from "../hooks/useAuth"
@@ -76,7 +69,7 @@ export function SignInScreen() {
               Cadastre
             </Text>
             <Text className="mx-4 text-5xl font-medium text-gray-800">
-              <Text className="font-extrabold">Simplifique</Text> seu Controle!
+              <Text className="font-extrabold">Simplifique</Text> suas Compras!
             </Text>
           </View>
           <View className="mx-4 flex justify-between items-center gap-3">
@@ -107,6 +100,7 @@ export function SignInScreen() {
                     <Input.Field
                       onSubmitEditing={handleSubmit(handleSignIn)}
                       secureTextEntry
+                      autoCapitalize="none"
                       returnKeyType="send"
                       placeholder="Senha"
                       onChangeText={onChange}

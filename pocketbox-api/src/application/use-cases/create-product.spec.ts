@@ -7,8 +7,11 @@ describe('Products create', () => {
     const createProduct = new CreateProduct(productRepository);
 
     const productData = {
+      userId: 'user-1',
       name: 'Product 1',
       price: 10,
+      image: 'image.jpg',
+      quantity: 10,
       category: 'Product 1 category',
       description: 'Product 1 description',
     };

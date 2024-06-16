@@ -3,6 +3,8 @@ import { Replace } from '@/shared/utils/helpers/Replace';
 export interface ProductProps {
   id: string;
   userId: string;
+  image?: string;
+  quantity?: number;
   name: string;
   price: number;
   description: string;
@@ -27,6 +29,7 @@ export class Product {
     this.props = {
       ...props,
       id: props.id ?? undefined,
+      quantity: props.quantity ?? 1,
       createdAt: props.createdAt ?? new Date(),
       updatedAt: props.updatedAt ?? new Date(),
     };
@@ -62,6 +65,22 @@ export class Product {
 
   public get price(): number {
     return this.props.price;
+  }
+
+  public set image(image: string) {
+    this.props.image = image;
+  }
+
+  public get image(): string {
+    return this.props.image;
+  }
+
+  public set quantity(quantity: number) {
+    this.props.quantity = quantity;
+  }
+
+  public get quantity(): number {
+    return this.props.quantity;
   }
 
   public set category(category: string) {
@@ -100,6 +119,8 @@ export class Product {
     return {
       id: this.id,
       userId: this.userId,
+      image: this.image,
+      quantity: this.quantity,
       name: this.name,
       price: this.price,
       description: this.description,
